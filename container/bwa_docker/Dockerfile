@@ -8,10 +8,11 @@ MAINTAINER Luyi Tian tlytiger@hotmail.com
 # ENV HOME /root
 # ENV DEBIAN_FRONTEND noninteractive
 
-# Update
+# Update install packages required by bwa aligner
 RUN apt-get update -y && apt-get install -y \
 wget \
-build-essential
+build-essential \
+libz-dev
 
 # + bwa 
 RUN wget -O /tmp/bwa-0.7.12.tar.bz2 http://sourceforge.net/projects/bio-bwa/files/bwa-0.7.12.tar.bz2 \
