@@ -13,7 +13,7 @@ RUN apt-get update -y && apt-get install -y wget
 
 # + bwa 
 RUN wget -O /tmp/bwa-0.7.12.tar.bz2 http://sourceforge.net/projects/bio-bwa/files/bwa-0.7.12.tar.bz2 \
-    && tar xjvf /tmp/bwa-0.7.12.tar.bz2 \
+    && tar xjvf /tmp/bwa-0.7.12.tar.bz2 -C /tmp/\
     && cd /tmp/bwa-0.7.12 && make \
     && cp -v /tmp/bwa-0.7.12/bwa /usr/local/bin
   
