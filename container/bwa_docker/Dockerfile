@@ -1,5 +1,5 @@
 # Base image
-FROM ubuntu
+FROM ubuntu:14.04
 
 # Maintainer 
 MAINTAINER Luyi Tian tlytiger@hotmail.com
