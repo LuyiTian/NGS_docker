@@ -9,8 +9,8 @@ MAINTAINER Luyi Tian tlytiger@hotmail.com
 # ENV DEBIAN_FRONTEND noninteractive
 
 # Update
-#RUN apt-get update -y && apt-get upgrade -y
-RUN sudo apt-get install wget
+RUN apt-get update -y && apt-get install -y wget
+
 # + bwa 
 RUN wget -O /tmp/bwa-0.7.12.tar.bz2 http://sourceforge.net/projects/bio-bwa/files/bwa-0.7.12.tar.bz2 \
     && tar xjvf /tmp/bwa-0.7.12.tar.bz2 \
