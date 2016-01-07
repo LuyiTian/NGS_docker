@@ -6,24 +6,26 @@
 ## Usage
 ################################################################
 #
-#    make all && sudo make install
+#    
 #
 # ...or...
 #
-#    make INSTALLDIR="/CUSTOM/PATH" all && sudo make install
+#    
 #
 ################################################################
 
 ################################################################
 ## Edit this to reflect version
 VERSION=0.1
+BWA_VERSION=0.7.12
+SAMTOOLS_VERSION=1.3
 
 
 ################################################################
 ## This is where we will make ngs_projects and download metadata to etc etc
 ## Edit this if you want to install all somewhere else
 # eg:
-# make INSTALLDIR="/aa/bb" all
+# make INSTALLDIR="/your/path" all
 #
 INSTALLDIR=/root/NGS_docker
 
@@ -43,18 +45,26 @@ GFW=1
 
 
 ################################################################
-# Intsalling all or parts...
-################################################################
+# build images...
+buildimage: ubuntubase bwaimage
 
 ubuntubase:
-	@ifeq(GFW,1) \
-		echo "pull ubuntu 14.04 from dockerpool" \
-	#	echo "DOCKER_OPTS=\"--insecure-registry dl.dockerpool.com:5000\"" > /etc/default/docker \
-	#	service docker restart \
-	#	docker pull dl.dockerpool.com:5000/ubuntu:14.04 \
-	#	docker tag dl.dockerpool.com:5000/ubuntu:14.04 ubuntu:14.04 \
-	else \
-		echo "pull ubuntu 14.04 from docker.io, if doesnot work try make GFW=1" \
-	#	docker pull ubuntu:14.04 \
+ifeq ($(GFW),1) 
+	@echo "pull ubuntu 14.04 from dockerpool" 
+	docker pull dl.dockerpool.com:5000/ubuntu:14.04
+	docker tag dl.dockerpool.com:5000/ubuntu:14.04 ubuntu:14.04
+else 
+	@echo "pull ubuntu 14.04 from docker.io, if doesnot work try 'GFW=1'" 
+	docker pull ubuntu:14.04
+endif
+
+bwaimage:
+	@echo "build bwa image from dockerfile"
+	docker build -t bwa:$(BWA_VERSION) -f bwa_Dockerfile $(DIR)/dockerfile
+
+samtoolsimage:
+	@echo "build samtools image from dockerfile"
+	docker build -t samtools:$(SAMTOOLS_VERSION) -f samtools_Dockerfile $(DIR)/dockerfile
+
 
 
