@@ -60,11 +60,15 @@ endif
 
 bwaimage:
 	@echo "build bwa image from dockerfile"
-	docker build -t bwa:$(BWA_VERSION) -f bwa_Dockerfile $(DIR)/dockerfiles/
+	cd dockerfiles && \
+	docker build -t bwa:$(BWA_VERSION) -f bwa_Dockerfile . && \
+	cd ..
 
 samtoolsimage:
 	@echo "build samtools image from dockerfile"
-	docker build -t samtools:$(SAMTOOLS_VERSION) -f samtools_Dockerfile $(DIR)/dockerfiles/
+	cd dockerfiles && \
+	docker build -t samtools:$(SAMTOOLS_VERSION) -f samtools_Dockerfile . && \
+	cd ..
 
 
 
