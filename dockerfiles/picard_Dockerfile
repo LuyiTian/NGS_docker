@@ -17,7 +17,8 @@ unzip
 # + picard
 RUN wget -O /tmp/picard-tools-1.119.zip http://sourceforge.net/projects/picard/files/picard-tools/1.119/picard-tools-1.119.zip \
     && unzip /tmp/picard-tools-1.119.zip -d /tmp/ \
-    && cp -v /tmp/picard-tools-1.119/* /usr/local/bin
+    && cp -v /tmp/picard-tools-1.119/* /usr/local/bin \
+    && export CLASSPATH=/usr/local/bin:$CLASSPATH
   
 #Cleanup the temp dir
 RUN rm -rf /tmp/*
