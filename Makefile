@@ -19,7 +19,7 @@
 VERSION=0.1
 BWA_VERSION=0.7.12
 SAMTOOLS_VERSION=1.3
-
+PICARD_VERSION=1.119
 
 ################################################################
 ## This is where we will make ngs_projects and download metadata to etc etc
@@ -70,5 +70,10 @@ samtoolsimage:
 	docker build -t samtools:$(SAMTOOLS_VERSION) -f samtools_Dockerfile . && \
 	cd ..
 
+picardimage:
+	@echo "build picard image from dockerfile"
+	cd dockerfiles && \
+	docker build -t picard:$(PICARD_VERSION) -f picard_Dockerfile . && \
+	cd ..
 
 
