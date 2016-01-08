@@ -11,7 +11,8 @@ MAINTAINER Luyi Tian tlytiger@hotmail.com
 # Update install packages required by picard
 RUN apt-get update -y && apt-get install -y \
 wget \
-default-jre
+default-jre \
+unzip
 
 # + picard
 RUN wget -O /tmp/picard-tools-1.119.zip http://sourceforge.net/projects/picard/files/picard-tools/1.119/picard-tools-1.119.zip \
