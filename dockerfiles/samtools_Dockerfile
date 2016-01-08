@@ -9,10 +9,12 @@ MAINTAINER Luyi Tian tlytiger@hotmail.com
 # ENV DEBIAN_FRONTEND noninteractive
 
 # Update install packages required by samtools
-RUN apt-get update -y && apt-get install -y \
-wget \
-build-essential \
-libz-dev \
+RUN apt-get update -y
+RUN apt-get install -y wget
+RUN apt-get install -y build-essential
+RUN apt-get install -y libz-dev
+
+RUN apt-get install -y \
 libncurses5-dev \
 libncursesw5-dev
 

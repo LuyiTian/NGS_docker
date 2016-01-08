@@ -9,10 +9,10 @@ MAINTAINER Luyi Tian tlytiger@hotmail.com
 # ENV DEBIAN_FRONTEND noninteractive
 
 # Update install packages required by picard
-RUN apt-get update -y && apt-get install -y \
-wget \
-default-jre \
-unzip
+RUN apt-get update -y 
+RUN apt-get install -y wget
+RUN apt-get install -y default-jre
+RUN apt-get install -y unzip
 
 # + picard
 RUN wget -O /tmp/picard-tools-1.119.zip http://sourceforge.net/projects/picard/files/picard-tools/1.119/picard-tools-1.119.zip \

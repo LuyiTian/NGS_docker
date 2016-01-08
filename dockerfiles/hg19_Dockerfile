@@ -13,22 +13,13 @@ MAINTAINER Luyi Tian tlytiger@hotmail.com
 #       just hope to reuse cache
 RUN apt-get update -y
 RUN apt-get install -y wget
-RUN apt-get install -y build-essential
 RUN apt-get install -y libz-dev
 
 # + bwa 
-RUN wget -O /tmp/bwa-0.7.12.tar.bz2 http://sourceforge.net/projects/bio-bwa/files/bwa-0.7.12.tar.bz2 \
-    && tar xjvf /tmp/bwa-0.7.12.tar.bz2 -C /tmp/ \
-    && cd /tmp/bwa-0.7.12 \
-    && make \
-    && cp -v /tmp/bwa-0.7.12/bwa /usr/local/bin
+RUN mkdir ref \
+    && cd ref \
+    && wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/2.8/hg19/ucsc.hg19.dict.*
   
-#Cleanup the temp dir
-RUN rm -rf /tmp/*
-
-# Use baseimage-docker's bash.
-CMD ["/bin/bash"]
-
 #Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN apt-get autoclean && apt-get autoremove -y && rm -rf /var/lib/{apt,dpkg,cache,log}/
