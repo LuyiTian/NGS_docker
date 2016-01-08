@@ -76,4 +76,12 @@ picardimage:
 	docker build -t picard:$(PICARD_VERSION) -f picard_Dockerfile . && \
 	cd ..
 
+#####
+# build data images...
+hg19image:
+	@echo "build hg19 reference image from dockerfile"
+	cd dockerfiles && \
+	docker build -t reference:hg19 -f hg19_Dockerfile . && \
+	cd ..
+
 
