@@ -46,7 +46,7 @@ GFW=1
 
 ################################################################
 # build images...
-buildimage: ubuntubase bwaimage
+buildimage: ubuntubase bwaimage samtoolsimage
 
 ubuntubase:
 ifeq ($(GFW),1) 
