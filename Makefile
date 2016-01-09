@@ -46,11 +46,12 @@ GFW=1
 
 ################################################################
 # build images...
-buildimage: ubuntubase bwaimage samtoolsimage
+buildimage: ubuntubase bwaimage samtoolsimage picardimage hg19image
 
 ubuntubase:
 ifeq ($(GFW),1) 
 	@echo "pull ubuntu 14.04 from dockerpool" 
+	sed -i 'DOCKER_OPTS="--insecure-registry dl.dockerpool.com:5000"' /etc/default/docker
 	docker pull dl.dockerpool.com:5000/ubuntu:14.04
 	docker tag dl.dockerpool.com:5000/ubuntu:14.04 ubuntu:14.04
 else 
