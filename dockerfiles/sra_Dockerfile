@@ -15,9 +15,9 @@ RUN apt-get update -y
 RUN apt-get install -y wget
 
 # + sra-toolkit 
-RUN wget -O /tmp/sratoolkit.current-ubuntu64.tar.gz http://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/current/sratoolkit.current-ubuntu64.tar.gz \
-    && tar vxzf /tmp/sratoolkit.current-ubuntu64.tar.gz -C /tmp/ \
-    && cp -v /tmp/sratoolkit.current-ubuntu64/* /usr/local/bin
+RUN wget -O /tmp/sratoolkit.2.5.7-ubuntu64.tar.gz http://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/2.5.7/sratoolkit.2.5.7-ubuntu64.tar.gz \
+    && tar vxzf /tmp/sratoolkit.2.5.7-ubuntu64.tar.gz -C /tmp/ \
+    && cp -v /tmp/sratoolkit.2.5.7-ubuntu64/* /usr/local/bin
 
 ADD scripts/download_sra.sh /usr/local/bin/
 RUN chmod 777 /usr/local/bin/download_sra.sh

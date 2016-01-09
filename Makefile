@@ -20,7 +20,7 @@ VERSION=0.1
 BWA_VERSION=0.7.12
 SAMTOOLS_VERSION=1.3
 PICARD_VERSION=1.119
-SRA_VERSION=current
+SRA_VERSION=2.5.7
 
 ################################################################
 ## Current working dir
