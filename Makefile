@@ -6,7 +6,7 @@
 ## Usage
 ################################################################
 #
-#    
+#    make buildimage
 #
 # ...or...
 #
@@ -20,14 +20,7 @@ VERSION=0.1
 BWA_VERSION=0.7.12
 SAMTOOLS_VERSION=1.3
 PICARD_VERSION=1.119
-
-################################################################
-## This is where we will make ngs_projects and download metadata to etc etc
-## Edit this if you want to install all somewhere else
-# eg:
-# make INSTALLDIR="/your/path" all
-#
-INSTALLDIR=/root/NGS_docker
+SRA_VERSION=current
 
 ################################################################
 ## Current working dir
@@ -61,21 +54,23 @@ endif
 
 bwaimage:
 	@echo "build bwa image from dockerfile"
-	cd dockerfiles && \
+	cd $(DIR)/dockerfiles && \
 	docker build -t bwa:$(BWA_VERSION) -f bwa_Dockerfile . && \
-	cd ..
 
 samtoolsimage:
 	@echo "build samtools image from dockerfile"
-	cd dockerfiles && \
+	cd $(DIR)/dockerfiles && \
 	docker build -t samtools:$(SAMTOOLS_VERSION) -f samtools_Dockerfile . && \
-	cd ..
 
 picardimage:
 	@echo "build picard image from dockerfile"
-	cd dockerfiles && \
+	cd $(DIR)/dockerfiles && \
 	docker build -t picard:$(PICARD_VERSION) -f picard_Dockerfile . && \
-	cd ..
+
+sraimage:
+	@echo "build sra-toolkit image from dockerfile"
+	cd $(DIR)/dockerfiles && \
+	docker build -t sratoolkit:$(SRA_VERSION) -f sra_Dockerfile . && \
 
 #####
 # build data images...

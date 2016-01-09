@@ -26,7 +26,7 @@ def get_args():
         prog=__PROG,
         description=__MAN,
         version=__VERSION,
-        epilog="to modify"
+        epilog="to change parameters used in ",
         formatter_class=argparse.RawDescriptionHelpFormatter
         )
     parser.add_argument(
@@ -47,9 +47,15 @@ def get_args():
         type=str,
         required=True
         )
+    parser.add_argument(
+        "--buildindex",
+        help="whether to build bwa index before the pipeline",
+        type=bool,
+        default=True
+        )
     args = parser.parse_args()
+    return args
 
 
 if __name__ == '__main__':
-    
-    get_args()
+    args = get_args()

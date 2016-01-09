@@ -8,16 +8,19 @@ MAINTAINER Luyi Tian tlytiger@hotmail.com
 # ENV HOME /root
 # ENV DEBIAN_FRONTEND noninteractive
 
-# Update install packages
+# Update install packages required 
 # NOTE: running update and install separately is not the best practice
 #       just hope to reuse cache
 RUN apt-get update -y
 RUN apt-get install -y wget
 
-# + hg19 
-RUN mkdir ref \
-    && cd ref \
-    && wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/2.8/hg19/*
+# + sra-toolkit 
+RUN wget -O /tmp/sratoolkit.current-ubuntu64.tar.gz http://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/current/sratoolkit.current-ubuntu64.tar.gz \
+    && tar vxzf /tmp/sratoolkit.current-ubuntu64.tar.gz -C /tmp/ \
+    && cp -v /tmp/sratoolkit.current-ubuntu64/* /usr/local/bin
+
+ADD scripts/download_sra.sh /usr/local/bin/
+RUN chmod 777 /usr/local/bin/download_sra.sh
   
 #Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
