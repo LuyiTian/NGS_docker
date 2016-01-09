@@ -26,13 +26,13 @@ def bwa_index(in_fasta, version_cfg):
     return " && ".join([cmd1,cmd2]), None
 
 
-
+'''
 def bwa_mem(in_fq_list, version_cfg, args):
     """
     """
     _ref_version = version_cfg["REF_VERSION"]
     _bwa_version = version_cfg["BWA_VERSION"]
-    if in_fq_list[0][-3:] == ".gz":
+    #if in_fq_list[0][-3:] == ".gz":
     cmd = \
         """docker run \
     --rm \
@@ -43,5 +43,5 @@ def bwa_mem(in_fq_list, version_cfg, args):
         in_f=in_fasta,
         _ref_v=_ref_version,
         _bwa_v=_bwa_version)
-
     return cmd, None
+'''
