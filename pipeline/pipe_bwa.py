@@ -8,12 +8,12 @@ def bwa_index(in_fasta, version_cfg):
     _bwa_version = version_cfg["BWA_VERSION"]
 
     cmd1 = \
-        """docker create \
+        """sudo docker create \
     -v /ref \
     --name {_ref_v} reference:{_ref_v}""".format(_ref_v=_ref_version)
 
     cmd2 = \
-        """docker run \
+        """sudo docker run \
     --rm \
     --volumes-from {_ref_v} \
     -w /ref \
