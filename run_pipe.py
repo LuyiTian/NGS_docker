@@ -1,7 +1,8 @@
 ##
 #
 import argparse
-
+from pipeline import pipe_bwa
+import param_cfg
 __PROG = "NGS_docker"
 __AUTHOR = "Luyi Tian"
 __VERSION = "0.1"
@@ -59,3 +60,4 @@ def get_args():
 
 if __name__ == '__main__':
     args = get_args()
+    pipe_bwa.bwa_index("ucsc.hg19.fasta.gz", param_cfg.version_cfg)

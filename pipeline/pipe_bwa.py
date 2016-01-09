@@ -18,7 +18,7 @@ def bwa_index(in_fasta, version_cfg):
     --volumes-from {_ref_v} \
     -w /ref \
     bwa:{_bwa_v} \
-    bash -c "mkdir -p index && cd index && bwa index {in_f}" """.format(
+    bash -c "mkdir -p index && cd index && bwa index /ref/{in_f}" """.format(
         in_f=in_fasta,
         _ref_v=_ref_version,
         _bwa_v=_bwa_version)
