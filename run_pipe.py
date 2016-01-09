@@ -61,6 +61,6 @@ def get_args():
 
 if __name__ == '__main__':
     args = get_args()
-    cmd = pipe_bwa.bwa_index("ucsc.hg19.fasta.gz", param_cfg.version_cfg)
+    cmd, _ = pipe_bwa.bwa_index("ucsc.hg19.fasta.gz", param_cfg.version_cfg)
     p = subprocess.Popen(cmd, shell=True)
     p.wait()
