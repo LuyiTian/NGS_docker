@@ -55,22 +55,22 @@ endif
 bwaimage:
 	@echo "build bwa image from dockerfile"
 	cd $(DIR)/dockerfiles && \
-	docker build -t bwa:$(BWA_VERSION) -f bwa_Dockerfile . && \
+	docker build -t bwa:$(BWA_VERSION) -f bwa_Dockerfile . 
 
 samtoolsimage:
 	@echo "build samtools image from dockerfile"
 	cd $(DIR)/dockerfiles && \
-	docker build -t samtools:$(SAMTOOLS_VERSION) -f samtools_Dockerfile . && \
+	docker build -t samtools:$(SAMTOOLS_VERSION) -f samtools_Dockerfile . 
 
 picardimage:
 	@echo "build picard image from dockerfile"
 	cd $(DIR)/dockerfiles && \
-	docker build -t picard:$(PICARD_VERSION) -f picard_Dockerfile . && \
+	docker build -t picard:$(PICARD_VERSION) -f picard_Dockerfile .
 
 sraimage:
 	@echo "build sra-toolkit image from dockerfile"
 	cd $(DIR)/dockerfiles && \
-	docker build -t sratoolkit:$(SRA_VERSION) -f sra_Dockerfile . && \
+	docker build -t sratoolkit:$(SRA_VERSION) -f sra_Dockerfile . 
 
 #####
 # build data images...
