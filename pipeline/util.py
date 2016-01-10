@@ -49,7 +49,7 @@ def init_datadir(args):
         f.write("#Root dir: {}\n".format(args.rootdir))
         f.write("#Sample Name: {}\n".format(args.samplename))
     cache_dict = {"_samplename": args.samplename}
-    pkl.dump(cache_dict, open(file_cfg["cache"](args), 'b'))
+    pkl.dump(cache_dict, open(file_cfg["cache"](args), 'wb'))
 
 
 def _check_exists(cmd, cache_dict):
@@ -113,7 +113,7 @@ def run_task(task_name):
                 run_log.write(__RUN_LOG_FORMAT.format(
                     _n=task_name, _st=start_time, _et=end_time, _o=out_f, _s="Success"))
                 cache_dict[cmd] = out_f
-                pkl.dump(cache_dict, open(file_cfg["cache"](args), 'b'))
+                pkl.dump(cache_dict, open(file_cfg["cache"](args), 'wb'))
             else:
                 run_log.write(__RUN_LOG_FORMAT.format(
                     _n=task_name, _st=start_time, _et=end_time, _o=out_f, _s="Failed"))
