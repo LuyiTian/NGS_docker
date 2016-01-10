@@ -57,6 +57,8 @@ def _check_exists(cmd, cache_dict):
     """
     if cmd not in cache_dict:
         return False
+    if not cache_dict[cmd]:
+        return False
     if isinstance(cache_dict[cmd], list):
         # if out_file is a list
         for f in cache_dict[cmd]:
