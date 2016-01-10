@@ -78,7 +78,7 @@ def _del_files(out_f):
             os.remove(f)
     else:
         # if out_f is a string
-        os.remove(f)
+        os.remove(out_f)
 
 
 def run_task(task_name):
