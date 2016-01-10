@@ -72,6 +72,8 @@ def _check_exists(cmd, cache_dict):
 def _del_files(out_f):
     """
     """
+    if not out_f:
+        return
     if isinstance(out_f, list):
         # if out_f is a list
         for f in out_f:
