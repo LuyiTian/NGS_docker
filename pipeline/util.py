@@ -2,7 +2,18 @@
 import datetime
 import functools
 import os
+import sys
+import cPickle as pkl
+from param_cfg import *
 __TIME_FORMAT = "%Y-%m-%d %H:%M:%S"
+__RUN_LOG_FORMAT = \
+    """
+Task: {_n}
+    Start Time: {_st}
+    Output: {_o}
+    End Time: {_et}
+    Status: {_s}
+"""
 
 
 def prep_dir(result_dir, sub_dir):
@@ -17,19 +28,73 @@ def prep_dir(result_dir, sub_dir):
     return sub_path
 
 
-def run_task(tag_line):
+def _check_exists(cmd, out_f, cache_dict):
+    if cmd not in cache_dict:
+        return False
+    if isinstance(out_f, list):
+        # if out_f is a list
+        for f in out_f:
+            if not os.path.isfile(f):
+                return False
+    else:
+        # if out_f is a string
+        if not os.path.isfile(out_f):
+            return False
+    return True
+
+
+def _del_files(out_f):
+    if isinstance(out_f, list):
+        # if out_f is a list
+        for f in out_f:
+            os.remove(f)
+    else:
+        # if out_f is a string
+        os.remove(f)
+
+
+def run_task(task_name):
     """
     a decorator to run command, add time tag and run info to output logs
     """
     def actualDecorator(func):
         @functools.wraps(func)
-        def wrapper(obj, **kwargs):
+        def wrapper(args, **kwargs):
+            ## start logging
+            run_log = open(file_cfg["run_log"](args), 'a')
+            ## load cache_dict
+            cache_dict = pkl.load(open(file_cfg["cache"](args), 'b'))
+
             start_time = datetime.datetime.now().strftime(__TIME_FORMAT)
-            obj.std_handle.write(tag_line.format(status="started", time=start_time, **kwargs))
-            result = func(obj, **kwargs)
+            cmd, out_f = func(args, **kwargs)
+            ## check if output file already exist
+            if out_f and args.usecache:
+                if _check_exists(cmd, out_f, cache_dict):
+                    status = "Exists, skip this task"
+                    run_log.write(__RUN_LOG_FORMAT.format(
+                        _n=task_name, _st=start_time, _et=start_time, _o=out_f, _s=status))
+                    run_log.close()
+                    return cmd, out_f, status
+            ## run command
+            p = subprocess.Popen(
+                cmd, shell=True, stdout=open(file_cfg["std_log"](args), 'a'), stderr=open(file_cfg["err_log"](args), 'a'))
+            returncode = p.wait()
             end_time = datetime.datetime.now().strftime(__TIME_FORMAT)
-            obj.std_handle.write(tag_line.format(status="ended", time=end_time, **kwargs))
-            return result
+            ## check return code
+            if returncode == 0:
+                run_log.write(__RUN_LOG_FORMAT.format(
+                    _n=task_name, _st=start_time, _et=end_time, _o=out_f, _s="Success"))
+                cache_dict[cmd] = out_f
+                pkl.dump(cache_dict, open(file_cfg["cache"](args), 'b'))
+            else:
+                run_log.write(__RUN_LOG_FORMAT.format(
+                    _n=task_name, _st=start_time, _et=end_time, _o=out_f, _s="Failed"))
+                print "{} fails with return code ({})\nsee:{}\nfor more info".format(
+                    task_name, returncode, file_cfg["err_log"](args))
+                _del_files(out_f)
+                sys.exit(returncode)
+            run_log.close()
+            return cmd, out_f, status
         return wrapper
 
     return actualDecorator

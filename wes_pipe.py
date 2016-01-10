@@ -2,7 +2,6 @@
 #
 import argparse
 from pipeline import pipe_bwa
-import param_cfg
 import subprocess
 __PROG = "NGS_docker"
 __AUTHOR = "Luyi Tian"
@@ -45,22 +44,29 @@ def get_args():
         )
     parser.add_argument(
         "--rootdir", "-o",
-        help="a subdir /samplename will be created to deposite all results",
+        help="will be created to deposite all results in rootdir, use absolute path",
         type=str,
         required=True
         )
     parser.add_argument(
         "--buildindex",
-        help="whether to build bwa index before the pipeline",
+        help="whether to build bwa index before the pipeline (default %(default)s)",
+        type=bool,
+        default=True
+        )
+    parser.add_argument(
+        "--usecache",
+        help="whether to use cache to skip finished tasks (default %(default)s)",
         type=bool,
         default=True
         )
     args = parser.parse_args()
     return args
 
+def main(args):
+    cmd, _ = pipe_bwa.bwa_index(args)
+
 
 if __name__ == '__main__':
     args = get_args()
-    cmd, _ = pipe_bwa.bwa_index("ucsc.hg19.fasta.gz", param_cfg.version_cfg)
-    p = subprocess.Popen(cmd, shell=True)
-    p.wait()
+    main(args)

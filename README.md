@@ -11,9 +11,9 @@ inspired by [Omics Pipe](http://pythonhosted.org/omics_pipe/) and [NGSeasy](http
 > rootdir/
 >   samplename/
 >       /samplename.vcf #final result
->       /log/std.txt # put all program output here
->       /log/err.txt # put error msg here
->       /log/run.txt # put pipeline running status here
+>       /log/{samplename}.std.txt # put all program output here
+>       /log/{samplename}.err.txt # put error msg here
+>       /log/{samplename}.run.txt # put pipeline running status here
 >       /tmp # all intermadiate files
 >       /tmp/cache_dict.pkl 
 >       /report 
