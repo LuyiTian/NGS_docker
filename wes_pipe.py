@@ -2,7 +2,7 @@
 #
 import argparse
 from pipeline import pipe_bwa
-import subprocess
+from pipeline import util
 __PROG = "NGS_docker"
 __AUTHOR = "Luyi Tian"
 __VERSION = "0.1"
@@ -63,7 +63,9 @@ def get_args():
     args = parser.parse_args()
     return args
 
+
 def main(args):
+    util.init_datadir(args)
     cmd, _ = pipe_bwa.bwa_index(args)
 
 
