@@ -1,5 +1,5 @@
 ## param_cfg.py
-
+import os
 version_cfg = {
     "REF_VERSION": "hg19",
     "BWA_VERSION": "0.7.12"
