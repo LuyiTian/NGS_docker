@@ -34,9 +34,9 @@ def init_datadir(args):
     doc
     """
     prep_dir(args.rootdir, args.samplename)
-    prep_dir(os.join.path(args.rootdir, args.samplename), "tmp")
-    prep_dir(os.join.path(args.rootdir, args.samplename), "log")
-    prep_dir(os.join.path(args.rootdir, args.samplename), "report")
+    prep_dir(os.path.join(args.rootdir, args.samplename), "tmp")
+    prep_dir(os.path.join(args.rootdir, args.samplename), "log")
+    prep_dir(os.path.join(args.rootdir, args.samplename), "report")
 
     with open(file_cfg["run_log"](args), 'w') as f:
         f.write("#Pipeline Started\n")
