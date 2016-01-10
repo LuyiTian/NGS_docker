@@ -28,22 +28,49 @@ def prep_dir(result_dir, sub_dir):
     return sub_path
 
 
-def _check_exists(cmd, out_f, cache_dict):
+def init_datadir(args):
+    """
+    doc
+    """
+    prep_dir(args.rootdir, args.samplename)
+    prep_dir(os.join.path(args.rootdir, args.samplename), "tmp")
+    prep_dir(os.join.path(args.rootdir, args.samplename), "log")
+    prep_dir(os.join.path(args.rootdir, args.samplename), "report")
+
+    with open(file_cfg["run_log"](args), 'w') as f:
+        f.write("#Pipeline Started\n")
+        f.write("#Root dir: {}\n".format(args.rootdir))
+        f.write("#Sample Name: {}\n".format(args.samplename))
+    with open(file_cfg["std_log"](args), 'w') as f:
+        f.write("#Root dir: {}\n".format(args.rootdir))
+        f.write("#Sample Name: {}\n".format(args.samplename))
+    with open(file_cfg["err_log"](args), 'w') as f:
+        f.write("#Root dir: {}\n".format(args.rootdir))
+        f.write("#Sample Name: {}\n".format(args.samplename))
+    cache_dict = {"_samplename": args.samplename}
+    pkl.dump(cache_dict, open(file_cfg["cache"](args), 'b'))
+
+
+def _check_exists(cmd, cache_dict):
+    """
+    """
     if cmd not in cache_dict:
         return False
-    if isinstance(out_f, list):
-        # if out_f is a list
-        for f in out_f:
+    if isinstance(cache_dict[cmd], list):
+        # if out_file is a list
+        for f in cache_dict[cmd]:
             if not os.path.isfile(f):
                 return False
     else:
-        # if out_f is a string
-        if not os.path.isfile(out_f):
+        # if out_file is a string
+        if not os.path.isfile(cache_dict[cmd]):
             return False
     return True
 
 
 def _del_files(out_f):
+    """
+    """
     if isinstance(out_f, list):
         # if out_f is a list
         for f in out_f:
