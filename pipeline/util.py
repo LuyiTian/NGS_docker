@@ -91,7 +91,7 @@ def run_task(task_name):
             ## start logging
             run_log = open(file_cfg["run_log"](args), 'a')
             ## load cache_dict
-            cache_dict = pkl.load(open(file_cfg["cache"](args), 'b'))
+            cache_dict = pkl.load(open(file_cfg["cache"](args), 'rb'))
 
             start_time = datetime.datetime.now().strftime(__TIME_FORMAT)
             cmd, out_f = func(args, **kwargs)
