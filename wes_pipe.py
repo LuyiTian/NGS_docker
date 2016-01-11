@@ -82,7 +82,7 @@ def get_args():
 def main(args):
     args.out_dir = os.path.join(args.rootdir, args.samplename)
     print args
-    #util.init_datadir(args)
+    util.init_datadir(args)
     if args.buildindex:
         cmd, _ = pipe_bwa.bwa_index(args)
     pipe_bwa.bwa_mem(args)
