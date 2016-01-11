@@ -1,7 +1,7 @@
 ## bwa.py
 import os
 from param_cfg import *
-from util import run_task, join_params, abs_path
+from util import run_task, join_params
 
 
 @run_task("build bwa index")
@@ -41,10 +41,10 @@ def bwa_mem(args):
             - fastq files may be gzipped
             - fastq file may not locate in the `--rootdir`
         """
-        data_dir, _ = os.path.split(abs_path(args.R1[0]))
+        data_dir = os.path.split(os.path.abspath(args.R1[0]))[0]
         in_f = []
         if len(args.R1) == 1:
-            in_f.append(os.path.split(abs_path(args.R1[0]))[1])
+            in_f.append(os.path.split(os.path.abspath(args.R1[0]))[1])
         else:
             if args.R1[0].split('.')[-1] == "gz":
                 in_f.append("'<zcat {}'".format(" ".join([os.path.split(it)[1] for it in args.R1])))
@@ -52,7 +52,7 @@ def bwa_mem(args):
                 in_f.append("'<cat {}'".format(" ".join([os.path.split(it)[1] for it in args.R1])))
         if args.R2 is not None:
             if len(args.R2) == 1:
-                in_f.append(os.path.split(abs_path(args.R1[0]))[1])
+                in_f.append(os.path.split(os.path.abspath(args.R1[0]))[1])
             else:
                 if args.R1[0].split('.')[-1] == "gz":
                     in_f.append("'<zcat {}'".format(" ".join([os.path.split(it)[1] for it in args.R2])))

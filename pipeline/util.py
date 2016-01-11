@@ -38,19 +38,6 @@ def join_params(cfg_dict):
     return " ".join(res)
 
 
-def abs_path(path):
-    """
-    return absolute path
-    """
-    if os.path.isfile(path):
-        return path
-    elif os.path.isfile(os.path.join(os.getcwd(), path)):
-        return os.path.join(os.getcwd(), path)
-    else:
-        raise IOError("neither {} or {} is a file".format(
-            path, os.path.join(os.getcwd(), path)))
-
-
 def init_datadir(args):
     """
     doc
