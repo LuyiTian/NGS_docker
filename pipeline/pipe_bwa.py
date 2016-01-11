@@ -22,7 +22,7 @@ def bwa_index(args):
     --volumes-from {_ref_v} \
     -w /ref \
     bwa:{_bwa_v} \
-    bwa index {in_f}" """.format(
+    bwa index {in_f} """.format(
         in_f=_in_fa,
         _ref_v=_ref_version,
         _bwa_v=_bwa_version)
