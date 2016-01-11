@@ -115,9 +115,9 @@ def run_task(task_name):
         @functools.wraps(func)
         def wrapper(args, **kwargs):
             ## start logging
-            run_log = open(file_cfg["run_log"](args), 'a')
+            run_log = open(os.path.join(out_dir, file_cfg["run_log"](args)), 'a')
             ## load cache_dict
-            cache_dict = pkl.load(open(file_cfg["cache"](args), 'rb'))
+            cache_dict = pkl.load(open(os.path.join(out_dir, file_cfg["cache"](args)), 'rb'))
 
             start_time = datetime.datetime.now().strftime(__TIME_FORMAT)
             cmd, out_f = func(args, **kwargs)
@@ -129,7 +129,10 @@ def run_task(task_name):
             else:
                 ## if not exists run command
                 p = subprocess.Popen(
-                    cmd, shell=True, stdout=open(file_cfg["std_log"](args), 'a'), stderr=open(file_cfg["err_log"](args), 'a'))
+                    cmd,
+                    shell=True,
+                    stdout=open(os.path.join(out_dir, file_cfg["std_log"](args)), 'a'),
+                    stderr=open(os.path.join(out_dir, file_cfg["err_log"](args)), 'a'))
                 returncode = p.wait()
                 end_time = datetime.datetime.now().strftime(__TIME_FORMAT)
                 ## check return code
@@ -137,16 +140,25 @@ def run_task(task_name):
                     status = "Success"
                     ## save successful result to cache
                     cache_dict[cmd] = out_f
-                    pkl.dump(cache_dict, open(file_cfg["cache"](args), 'wb'))
+                    pkl.dump(
+                        cache_dict,
+                        open(os.path.join(out_dir, file_cfg["cache"](args))))
                 else:
                     status = "Failed"
                     print "{} fails with return code ({})\nsee:{}\nfor more info".format(
-                        task_name, returncode, file_cfg["err_log"](args))
+                        task_name,
+                        returncode,
+                        file_cfg["err_log"](args))
                     ## delete out_f if task fails
                     _del_files(out_f)
             ## write to run log, if task fails, exit with return code
             run_log.write(__RUN_LOG_FORMAT.format(
-                _n=task_name, _st=start_time, _et=start_time, _o=out_f, _s=status, _cmd=cmd))
+                _n=task_name,
+                _st=start_time,
+                _et=end_time,
+                _o=out_f,
+                _s=status,
+                _cmd=cmd))
             run_log.close()
             if returncode != 0:
                 sys.exit(returncode)
