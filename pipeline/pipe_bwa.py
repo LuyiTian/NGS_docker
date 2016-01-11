@@ -30,6 +30,7 @@ def bwa_index(args):
     return " && ".join([cmd1, cmd2]), None
 
 
+@run_task("bwa-mem alignment")
 def bwa_mem(args):
     """
     """
