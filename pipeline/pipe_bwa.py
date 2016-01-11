@@ -80,4 +80,4 @@ def bwa_mem(args):
         _out_d=args.out_dir,
         _data_d=data_dir,
         _bwa_c=bwa_cmd)
-    return cmd, os.path.join(args.out_dir, file_cfg[aligned](args))
+    return cmd, os.path.join(args.out_dir, file_cfg["aligned"](args))
