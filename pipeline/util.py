@@ -95,16 +95,19 @@ def _check_exists(cmd, cache_dict):
 
 def _del_files(out_f):
     """
+    clean up if task fails
     """
     if not out_f:
         return
     if isinstance(out_f, list):
         # if out_f is a list
         for f in out_f:
-            os.remove(f)
+            if os.path.isfile(f):
+                os.remove(f)
     else:
         # if out_f is a string
-        os.remove(out_f)
+        if os.path.isfile(out_f):
+            os.remove(out_f)
 
 
 def run_task(task_name):
