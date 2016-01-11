@@ -1,6 +1,7 @@
 ##
 #
 import argparse
+import os
 from pipeline import pipe_bwa
 from pipeline import util
 __PROG = "NGS_docker"
@@ -27,7 +28,7 @@ def get_args():
         prog=__PROG,
         description=__MAN,
         version=__VERSION,
-        epilog="to change parameters used in ",
+        epilog="NOTE: all input fastq file should locate in the same dir",
         formatter_class=argparse.RawDescriptionHelpFormatter
         )
     parser.add_argument(
@@ -38,7 +39,7 @@ def get_args():
         )
     parser.add_argument(
         "--samplename", "-n",
-        help="unique samplename, will be used as a prefix for all files",
+        help="unique samplename, will be used as the prefix for all files",
         type=str,
         required=True
         )
@@ -51,22 +52,40 @@ def get_args():
     parser.add_argument(
         "--buildindex",
         help="whether to build bwa index before the pipeline (default %(default)s)",
-        type=bool,
-        default=True
+        action='store_true',
+        default=False
         )
     parser.add_argument(
         "--usecache",
         help="whether to use cache to skip finished tasks (default %(default)s)",
-        type=bool,
-        default=True
+        action='store_true',
+        default=False
+        )
+    parser.add_argument(
+        "-R1",
+        help="read 1 files for paired-ended reads, separated by space, if single-ended reads just use R1",
+        nargs='+',
+        type=str,
+        required=True
+        )
+    parser.add_argument(
+        "-R2",
+        help="read 2 for paired-ended reads, if single-ended reads ignore this arg",
+        nargs='+',
+        type=str,
+        default=""
         )
     args = parser.parse_args()
     return args
 
 
 def main(args):
-    util.init_datadir(args)
-    cmd, _ = pipe_bwa.bwa_index(args)
+    args.out_dir = os.path.join(args.rootdir, args.samplename)
+    print args
+    #util.init_datadir(args)
+    if args.buildindex:
+        cmd, _ = pipe_bwa.bwa_index(args)
+    pipe_bwa.bwa_mem(args)
 
 
 if __name__ == '__main__':
