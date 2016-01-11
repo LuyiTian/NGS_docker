@@ -115,9 +115,9 @@ def run_task(task_name):
         @functools.wraps(func)
         def wrapper(args, **kwargs):
             ## start logging
-            run_log = open(os.path.join(out_dir, file_cfg["run_log"](args)), 'a')
+            run_log = open(os.path.join(args.out_dir, file_cfg["run_log"](args)), 'a')
             ## load cache_dict
-            cache_dict = pkl.load(open(os.path.join(out_dir, file_cfg["cache"](args)), 'rb'))
+            cache_dict = pkl.load(open(os.path.join(args.out_dir, file_cfg["cache"](args)), 'rb'))
 
             start_time = datetime.datetime.now().strftime(__TIME_FORMAT)
             cmd, out_f = func(args, **kwargs)
@@ -131,8 +131,8 @@ def run_task(task_name):
                 p = subprocess.Popen(
                     cmd,
                     shell=True,
-                    stdout=open(os.path.join(out_dir, file_cfg["std_log"](args)), 'a'),
-                    stderr=open(os.path.join(out_dir, file_cfg["err_log"](args)), 'a'))
+                    stdout=open(os.path.join(args.out_dir, file_cfg["std_log"](args)), 'a'),
+                    stderr=open(os.path.join(args.out_dir, file_cfg["err_log"](args)), 'a'))
                 returncode = p.wait()
                 end_time = datetime.datetime.now().strftime(__TIME_FORMAT)
                 ## check return code
@@ -142,7 +142,7 @@ def run_task(task_name):
                     cache_dict[cmd] = out_f
                     pkl.dump(
                         cache_dict,
-                        open(os.path.join(out_dir, file_cfg["cache"](args))))
+                        open(os.path.join(args.out_dir, file_cfg["cache"](args))))
                 else:
                     status = "Failed"
                     print "{} fails with return code ({})\nsee:{}\nfor more info".format(
@@ -161,6 +161,7 @@ def run_task(task_name):
                 _cmd=cmd))
             run_log.close()
             if returncode != 0:
+                print p.stderr.read()
                 sys.exit(returncode)
             return cmd, out_f, status
         return wrapper
