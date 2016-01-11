@@ -143,13 +143,13 @@ def run_task(task_name):
                     cache_dict[cmd] = out_f
                     pkl.dump(
                         cache_dict,
-                        open(os.path.join(args.out_dir, file_cfg["cache"](args))))
+                        open(os.path.join(args.out_dir, file_cfg["cache"](args)), 'wb'))
                 else:
                     status = "Failed"
                     print "{} fails with return code ({})\nsee:{}\nfor more info".format(
                         task_name,
                         returncode,
-                        file_cfg["err_log"](args))
+                        os.path.join(args.out_dir, file_cfg["err_log"](args)))
                     ## delete out_f if task fails
                     _del_files(out_f)
             ## write to run log, if task fails, exit with return code
