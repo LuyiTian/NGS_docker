@@ -55,23 +55,23 @@ def init_datadir(args):
     """
     doc
     """
-    prep_dir(args.rootdir, args.samplename)
-    prep_dir(os.path.join(args.rootdir, args.samplename), "tmp")
-    prep_dir(os.path.join(args.rootdir, args.samplename), "log")
-    prep_dir(os.path.join(args.rootdir, args.samplename), "report")
+    out_dir = prep_dir(args.rootdir, args.samplename)
+    tmp_dir = prep_dir(out_dir, "tmp")
+    log_dir = prep_dir(out_dir, "log")
+    report_dir = prep_dir(out_dir, "report")
 
-    with open(file_cfg["run_log"](args), 'w') as f:
+    with open(os.path.join(out_dir, file_cfg["run_log"](args)), 'w') as f:
         f.write("#Pipeline Started\n")
         f.write("#Root dir: {}\n".format(args.rootdir))
         f.write("#Sample Name: {}\n".format(args.samplename))
-    with open(file_cfg["std_log"](args), 'w') as f:
+    with open(os.path.join(out_dir, file_cfg["std_log"](args)), 'w') as f:
         f.write("#Root dir: {}\n".format(args.rootdir))
         f.write("#Sample Name: {}\n".format(args.samplename))
-    with open(file_cfg["err_log"](args), 'w') as f:
+    with open(os.path.join(out_dir, file_cfg["err_log"](args)), 'w') as f:
         f.write("#Root dir: {}\n".format(args.rootdir))
         f.write("#Sample Name: {}\n".format(args.samplename))
     cache_dict = {"_samplename": args.samplename}
-    pkl.dump(cache_dict, open(file_cfg["cache"](args), 'wb'))
+    pkl.dump(cache_dict, open(os.path.join(tmp_dir, file_cfg["cache"](args)), 'wb'))
 
 
 def _check_exists(cmd, cache_dict):
