@@ -76,8 +76,7 @@ sraimage:
 # build data images...
 hg19image:
 	@echo "build hg19 reference image from dockerfile"
-	cd dockerfiles && \
-	docker build -t reference:hg19 -f hg19_Dockerfile . && \
-	cd ..
+	cd $(DIR)/dockerfiles && \
+	docker build -t reference:hg19 -f hg19_Dockerfile .
 
 
