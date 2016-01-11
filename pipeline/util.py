@@ -161,7 +161,6 @@ def run_task(task_name):
                 _cmd=cmd))
             run_log.close()
             if returncode != 0:
-                print p.stderr.read()
                 sys.exit(returncode)
             return cmd, out_f, status
         return wrapper
