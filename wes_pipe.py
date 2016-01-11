@@ -84,9 +84,10 @@ def main(args):
     print args
     util.init_datadir(args)
     if args.buildindex:
-        cmd, _ = pipe_bwa.bwa_index(args)
-    pipe_bwa.bwa_mem(args)
-
+        res = pipe_bwa.bwa_index(args)
+        print res
+    res = pipe_bwa.bwa_mem(args)
+    print res
 
 if __name__ == '__main__':
     args = get_args()
