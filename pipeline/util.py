@@ -121,6 +121,7 @@ def run_task(task_name):
 
             start_time = datetime.datetime.now().strftime(__TIME_FORMAT)
             cmd, out_f = func(args, **kwargs)
+            print cmd
             ## check if output file already exist
             if args.usecache and out_f and _check_exists(cmd, cache_dict):
                 status = "Exists, skip this task"
