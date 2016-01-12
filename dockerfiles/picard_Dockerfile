@@ -10,7 +10,7 @@ MAINTAINER Luyi Tian tlytiger@hotmail.com
 
 # Update install packages required by picard
 RUN apt-get update -y \
-    && apt-get install python-software-properties \
+    && apt-get install python-software-properties -y \
     && add-apt-repository ppa:webupd8team/java \
     && apt-get update -y 
 RUN apt-get install -y wget
