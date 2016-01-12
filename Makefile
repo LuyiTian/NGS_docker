@@ -19,7 +19,7 @@
 VERSION=0.1
 BWA_VERSION=0.7.12
 SAMTOOLS_VERSION=1.3
-PICARD_VERSION=1.119
+PICARD_VERSION=2.0.1
 SRA_VERSION=2.5.7
 
 ################################################################
