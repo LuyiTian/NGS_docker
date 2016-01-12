@@ -22,7 +22,7 @@ def bwa_index(args):
     --volumes-from {_ref_v} \
     -w /ref \
     bwa:{_bwa_v} \
-    bwa index {in_f} """.format(
+    index {in_f} """.format(
         in_f=_in_fa,
         _ref_v=_ref_version,
         _bwa_v=_bwa_version)
@@ -68,7 +68,7 @@ def bwa_mem(args):
     _out_sam = "> {}".format(os.path.join("/out_dir", file_cfg["aligned"](args)))
 
     bwa_cmd = " ".join(
-        ["bwa mem -t {_p}".format(_p=args.p), join_params(bwa_mem_cfg), _in_fa, in_fq, _out_sam])
+        ["mem -t {_p}".format(_p=args.p), join_params(bwa_mem_cfg), _in_fa, in_fq, _out_sam])
     cmd = \
         r"""docker run \
     --rm \

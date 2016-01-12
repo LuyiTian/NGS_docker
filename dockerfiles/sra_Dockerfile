@@ -21,7 +21,9 @@ RUN wget -O /tmp/sratoolkit.2.5.7-ubuntu64.tar.gz http://ftp-trace.ncbi.nlm.nih.
 
 ADD scripts/download_sra.sh /usr/local/bin/
 RUN chmod 777 /usr/local/bin/download_sra.sh
-  
+
+CMD ["/bin/bash"]
+
 #Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN apt-get autoclean && apt-get autoremove -y && rm -rf /var/lib/{apt,dpkg,cache,log}/
