@@ -85,7 +85,7 @@ def main(args):
     util.init_datadir(args)
     if args.buildindex:
         print pipe_bwa.bwa_index(args)
-    print pipe_bwa.bwa_mem(args)
+    #print pipe_bwa.bwa_mem(args)
     print pipe_picard.picard_sort(args)
     print pipe_picard.picard_dedup(args)
 
