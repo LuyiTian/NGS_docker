@@ -67,7 +67,7 @@ def bwa_mem(args):
     _out_sam = "> {}".format(os.path.join("/out_dir", file_cfg["aligned"](args)))
 
     bwa_cmd = " ".join(
-        ["bwa mem -p {_p}".format(_p=args.p), join_params(bwa_mem_cfg), _in_fa, in_fq, _out_sam])
+        ["bwa mem -t {_p}".format(_p=args.p), join_params(bwa_mem_cfg), _in_fa, in_fq, _out_sam])
     cmd = \
         r"""docker run \
     --rm \
