@@ -68,7 +68,7 @@ def init_datadir(args):
         f.write("#Sample Name: {}\n".format(args.samplename))
 
 
-def _check_exists(cmd, cache_dict):
+def _check_exists(args, cmd, cache_dict):
     """
     """
     if cmd not in cache_dict:
