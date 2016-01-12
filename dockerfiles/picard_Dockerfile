@@ -25,16 +25,15 @@ RUN export JAVA_HOME
 # + picard
 RUN wget -O /tmp/picard-tools-2.0.1.zip https://github.com/broadinstitute/picard/releases/download/2.0.1/picard-tools-2.0.1.zip \
     && unzip /tmp/picard-tools-2.0.1.zip -d /tmp/ \
-    && mkdir /jar \
-    && cp -v /tmp/picard-tools-2.0.1/* /jar 
-ENV CLASSPATH /jar/picard.jar
-RUN export CLASSPATH
+    && cp -v /tmp/picard-tools-2.0.1/* /usr/local/bin \
+    && bash -c 'echo -e "#!/bin/bash\njava -jar /usr/local/bin/picard.jar \$@" > /usr/local/bin/picard' \
+    && chmod +x /usr/local/bin/picard
   
 #Cleanup the temp dir
 RUN rm -rf /tmp/*
 
 # Use baseimage-docker's bash.
-CMD ["/bin/bash"]
+CMD ["picard"]
 
 #Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
