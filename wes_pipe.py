@@ -2,7 +2,7 @@
 #
 import argparse
 import os
-from pipeline import pipe_bwa
+from pipeline import pipe_bwa, pipe_picard
 from pipeline import util
 __PROG = "NGS_docker"
 __AUTHOR = "Luyi Tian"
@@ -84,10 +84,10 @@ def main(args):
     print args
     util.init_datadir(args)
     if args.buildindex:
-        res = pipe_bwa.bwa_index(args)
-        print res
-    res = pipe_bwa.bwa_mem(args)
-    print res
+        print pipe_bwa.bwa_index(args)
+    print pipe_bwa.bwa_mem(args)
+    print pipe_picard.picard_sort(args)
+    print pipe_picard.picard_dedup(args)
 
 if __name__ == '__main__':
     args = get_args()

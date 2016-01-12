@@ -18,14 +18,13 @@ file_cfg = {
     "err_log": lambda args: "log/{}.err.txt".format(args.samplename),
     "cache": lambda args: "tmp/cache_dict.pkl",
     "aligned": lambda args: "tmp/{}.aln.sam".format(args.samplename),
-    "sorted": lambda args: "tmp/{}.sort.bam".format(args.samplename)
+    "sorted": lambda args: "tmp/{}.sort.bam".format(args.samplename),
+    "dedup": lambda args: "tmp/{}.dedup.bam".format(args.samplename),
+    "matrics": lambda args: "tmp/{}.matrics.bam".format(args.samplename),
 }
 
 ###################
 ## stores program prarmeters, except in/out
 bwa_mem_cfg = {
-    "-R": r"'@RG\tID:group1\tSM:sample1\tLB:lib1\tPL:illumina\tPU:unit1'",
-    "-M": ""
+    "-R": r"'@RG\tID:group1\tSM:sample1\tLB:lib1\tPL:illumina\tPU:unit1'"
 }
-
-

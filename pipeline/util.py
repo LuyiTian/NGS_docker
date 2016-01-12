@@ -78,11 +78,11 @@ def _check_exists(cmd, cache_dict):
     if isinstance(cache_dict[cmd], list):
         # if out_file is a list
         for f in cache_dict[cmd]:
-            if not os.path.isfile(f):
+            if not os.path.isfile(os.path.join(args.out_dir, f)):
                 return False
     else:
         # if out_file is a string
-        if not os.path.isfile(cache_dict[cmd]):
+        if not os.path.isfile(os.path.join(args.out_dir, cache_dict[cmd])):
             return False
     return True
 
@@ -96,12 +96,12 @@ def _del_files(out_f):
     if isinstance(out_f, list):
         # if out_f is a list
         for f in out_f:
-            if os.path.isfile(f):
-                os.remove(f)
+            if os.path.isfile(os.path.join(args.out_dir, f)):
+                os.remove(os.path.join(args.out_dir, f))
     else:
         # if out_f is a string
-        if os.path.isfile(out_f):
-            os.remove(out_f)
+        if os.path.isfile(os.path.join(args.out_dir, out_f)):
+            os.remove(os.path.join(args.out_dir, out_f))
 
 
 def run_task(task_name):
@@ -120,7 +120,7 @@ def run_task(task_name):
             cmd, out_f = func(args, **kwargs)
             print cmd
             ## check if output file already exist
-            if args.usecache and out_f and _check_exists(cmd, cache_dict):
+            if args.usecache and out_f and _check_exists(args, cmd, cache_dict):
                 status = "Exists, skip this task"
                 end_time = datetime.datetime.now().strftime(__TIME_FORMAT)
                 returncode = 0
