@@ -18,7 +18,7 @@ RUN apt-get install -y unzip
 RUN wget -O /tmp/picard-tools-2.0.1.zip https://github.com/broadinstitute/picard/releases/download/2.0.1/picard-tools-2.0.1.zip \
     && unzip /tmp/picard-tools-2.0.1.zip -d /tmp/ \
     && cp -v /tmp/picard-tools-2.0.1/* /usr/local/bin \
-    && sed -i '$CLASSPATH=.:${CLASSPATH}:/usr/local/bin/picard.jar' .bashrc
+    && sed -i '$aCLASSPATH=.:${CLASSPATH}:/usr/local/bin/picard.jar' .bashrc
   
 #Cleanup the temp dir
 RUN rm -rf /tmp/*
