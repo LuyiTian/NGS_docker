@@ -26,7 +26,7 @@ RUN export JAVA_HOME
 RUN wget -O /tmp/picard-tools-2.0.1.zip https://github.com/broadinstitute/picard/releases/download/2.0.1/picard-tools-2.0.1.zip \
     && unzip /tmp/picard-tools-2.0.1.zip -d /tmp/ \
     && mkdir /jar \
-    && cp -v /tmp/picard-tools-2.0.1/* /jar \
+    && cp -v /tmp/picard-tools-2.0.1/* /jar 
 ENV CLASSPATH /jar
 RUN export CLASSPATH
   
