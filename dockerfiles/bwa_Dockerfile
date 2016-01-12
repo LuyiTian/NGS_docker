@@ -27,7 +27,7 @@ RUN wget -O /tmp/bwa-0.7.12.tar.bz2 http://sourceforge.net/projects/bio-bwa/file
 RUN rm -rf /tmp/*
 
 # Use baseimage-docker's bash.
-CMD ["/bin/bash"]
+ENTRYPOINT ["bwa"]
 
 #Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
