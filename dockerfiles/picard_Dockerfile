@@ -9,7 +9,8 @@ MAINTAINER Luyi Tian tlytiger@hotmail.com
 # ENV DEBIAN_FRONTEND noninteractive
 
 # Update install packages required by picard
-RUN apt-get update -y 
+RUN add-apt-repository ppa:webupd8team/java \
+    && apt-get update -y 
 RUN apt-get install -y wget
 RUN apt-get install -y openjdk-8-jre
 RUN apt-get install -y unzip
