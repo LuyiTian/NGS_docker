@@ -36,10 +36,11 @@ def bwa_mem(args):
     """
     def parse_in(args):
         """
-        to deal with following issues:
+        to deal with the following issues:
             - there may be multiple fastq files
             - fastq files may be gzipped
             - fastq file may not locate in the `--rootdir`
+            - paired ended fastq files
         """
         data_dir = os.path.split(os.path.abspath(args.R1[0]))[0]
         in_f = []

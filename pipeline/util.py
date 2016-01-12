@@ -5,6 +5,7 @@ import os
 import sys
 import cPickle as pkl
 import subprocess
+from collections import OrderedDict
 from param_cfg import *
 __TIME_FORMAT = "%Y-%m-%d %H:%M:%S"
 __RUN_LOG_FORMAT = \
@@ -46,19 +47,25 @@ def init_datadir(args):
     prep_dir(out_dir, "tmp")
     prep_dir(out_dir, "log")
     prep_dir(out_dir, "report")
-
-    with open(os.path.join(out_dir, file_cfg["run_log"](args)), 'w') as f:
-        f.write("#Pipeline Started\n")
+    if os.path.isfile(os.path.join(out_dir, file_cfg["run_log"](args))):
+        mode = "w"
+        cache_dict = OrderedDict()
+        cache_dict["_samplename"] = args.samplename
+        pkl.dump(cache_dict, open(os.path.join(out_dir, file_cfg["cache"](args)), 'wb'))
+    else:
+        mode = "a"
+    with open(os.path.join(out_dir, file_cfg["run_log"](args)), mode) as f:
+        f.write("#Pipeline Started at: {}\n".format(datetime.datetime.now().strftime(__TIME_FORMAT)))
+        f.write("#Args:\n")
+        f.write("".join(["#  {}\n    {}\n".format(k, v) for k, v in vars(args).iteritems()]))
+    with open(os.path.join(out_dir, file_cfg["std_log"](args)), mode) as f:
+        f.write("#Pipeline Started at: {}\n".format(datetime.datetime.now().strftime(__TIME_FORMAT)))
         f.write("#Root dir: {}\n".format(args.rootdir))
         f.write("#Sample Name: {}\n".format(args.samplename))
-    with open(os.path.join(out_dir, file_cfg["std_log"](args)), 'w') as f:
+    with open(os.path.join(out_dir, file_cfg["err_log"](args)), mode) as f:
+        f.write("#Pipeline Started at: {}\n".format(datetime.datetime.now().strftime(__TIME_FORMAT)))
         f.write("#Root dir: {}\n".format(args.rootdir))
         f.write("#Sample Name: {}\n".format(args.samplename))
-    with open(os.path.join(out_dir, file_cfg["err_log"](args)), 'w') as f:
-        f.write("#Root dir: {}\n".format(args.rootdir))
-        f.write("#Sample Name: {}\n".format(args.samplename))
-    cache_dict = {"_samplename": args.samplename}
-    pkl.dump(cache_dict, open(os.path.join(out_dir, file_cfg["cache"](args)), 'wb'))
 
 
 def _check_exists(cmd, cache_dict):
