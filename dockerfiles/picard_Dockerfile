@@ -15,10 +15,10 @@ RUN apt-get install -y default-jre
 RUN apt-get install -y unzip
 
 # + picard
-RUN wget -O /tmp/picard-tools-1.119.zip http://sourceforge.net/projects/picard/files/picard-tools/1.119/picard-tools-1.119.zip \
-    && unzip /tmp/picard-tools-1.119.zip -d /tmp/ \
-    && cp -v /tmp/picard-tools-1.119/* /usr/local/bin
-ENV CLASSPATH /usr/local/bin
+RUN wget -O /tmp/picard-tools-2.0.1.zip https://github.com/broadinstitute/picard/releases/download/2.0.1/picard-tools-2.0.1.zip \
+    && unzip /tmp/picard-tools-2.0.1.zip -d /tmp/ \
+    && cp -v /tmp/picard-tools-2.0.1/* /usr/local/bin
+ENV CLASSPATH /usr/local/bin/*.jar
   
 #Cleanup the temp dir
 RUN rm -rf /tmp/*

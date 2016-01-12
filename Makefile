@@ -80,3 +80,10 @@ hg19image:
 	docker build -t reference:hg19 -f hg19_Dockerfile .
 
 
+################################################################
+# clean up untagged images
+cleanuntagged:
+	@echo "remove untagged images"
+	docker rmi $(docker images | grep "^<none>" | awk "{print $3}")
+
+
