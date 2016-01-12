@@ -87,7 +87,7 @@ def _check_exists(args, cmd, cache_dict):
     return True
 
 
-def _del_files(out_f):
+def _del_files(args, out_f):
     """
     clean up if task fails
     """
