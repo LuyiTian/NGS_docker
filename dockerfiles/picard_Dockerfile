@@ -10,9 +10,6 @@ MAINTAINER Luyi Tian tlytiger@hotmail.com
 
 # Update install packages required by picard
 RUN apt-get update -y \
-    && apt-get install software-properties-common -y \
-    && add-apt-repository ppa:webupd8team/java \
-    && apt-get update -y \
     && apt-get install -y oracle-java8-installer
 RUN apt-get install -y wget
 RUN apt-get install -y unzip
