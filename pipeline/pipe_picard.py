@@ -15,7 +15,7 @@ def picard_sort(args):
     -v {_out_d}:/out_dir \
     -w /out_dir \
     picard:2.0.1 \
-    SortSam I={aligned} O={sort} TMP_DIR=/out_dir""".format(
+    SortSam I={aligned} O={sort} TMP_DIR=/out_dir SORT_ORDER=coordinate""".format(
         aligned=file_cfg["aligned"](args),
         sort=file_cfg["sorted"](args),
         _out_d=args.out_dir)
