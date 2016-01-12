@@ -148,7 +148,7 @@ def run_task(task_name):
                         returncode,
                         os.path.join(args.out_dir, file_cfg["err_log"](args)))
                     ## delete out_f if task fails
-                    _del_files(out_f)
+                    _del_files(args, out_f)
             ## write to run log, if task fails, exit with return code
             run_log.write(__RUN_LOG_FORMAT.format(
                 _n=task_name,
