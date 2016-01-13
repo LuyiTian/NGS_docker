@@ -12,7 +12,7 @@ def bwa_index(args, param_dict=None):
     cmd1 = \
         """docker create \
     -v /ref \
-    --name {_ref_v} reference:{_ref_v}""".format(_ref_v=_ref_version)
+    --name {_ref_v} reference:{_ref_v}""".format(_ref_v=version_cfg["REF_VERSION"])
 
     cmd2 = \
         """docker run \
@@ -21,7 +21,7 @@ def bwa_index(args, param_dict=None):
     -w /ref \
     bwa:{_bwa_v} \
     bwa index {param} {in_f} """.format(
-        in_f=ref_file_cfg[_ref_version]["fa"],
+        in_f=ref_file_cfg[version_cfg["REF_VERSION"]]["fa"],
         param=join_params(param_dict),
         _ref_v=version_cfg["REF_VERSION"],
         _bwa_v=_version)
@@ -69,7 +69,7 @@ def bwa_mem(args, param_dict=None):
     data_dir, in_fq = parse_in(args)
     _out_sam = "> {}".format(file_cfg["aligned"](args))
     bwa_cmd = " ".join(
-        ["bwa mem -t {_p} -M".format(_p=args.p), join_params(param_dict), ref_file_cfg[_ref_version]["fa"], in_fq, _out_sam])
+        ["bwa mem -t {_p} -M".format(_p=args.p), join_params(param_dict), ref_file_cfg[version_cfg["REF_VERSION"]]["fa"], in_fq, _out_sam])
     cmd = \
         r"""{_D} -v {_data_d}:/data bwa:{_bwa_v} bash -c "{_bwa_c}" """.format(
             _D=DOCKER_RUN,
