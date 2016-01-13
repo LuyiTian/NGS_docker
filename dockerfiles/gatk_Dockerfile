@@ -20,8 +20,7 @@ RUN export JAVA_HOME
 
 # + picard
 ADD GenomeAnalysisTK-3.5.tar.bz2 /tmp
-RUN tar -xjf /tmp/GenomeAnalysisTK-3.5.tar.bz2 -C /tmp/ \
-    && cp -v /tmp/GenomeAnalysisTK-3.5/* /usr/local/bin \
+RUN cp -v /tmp/GenomeAnalysisTK-3.5/* /usr/local/bin \
     && bash -c 'echo -e "#!/bin/bash\njava -Xmx4g -jar /usr/local/bin/GenomeAnalysisTK.jar \$@" > /usr/local/bin/gatk' \
     && chmod +x /usr/local/bin/gatk
   
