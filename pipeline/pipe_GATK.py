@@ -23,7 +23,6 @@ def gatk_bqsr(args, param_dict=None):
         _out_d=args.out_dir,
         param=join_params(param_dict),
         _p=args.p,
-        _D=DOCKER_RUN,
         _v=_version,
         _R=ref_file_cfg[version_cfg["REF_VERSION"]]["fa"],
         _dbsnp_vcf=ref_file_cfg[version_cfg["REF_VERSION"]]["dbsnp"],
@@ -47,7 +46,6 @@ def gatk_printread(args, param_dict=None):
         _out_d=args.out_dir,
         param=join_params(param_dict),
         _p=args.p,
-        _D=DOCKER_RUN,
         _v=_version,
         _R=ref_file_cfg[version_cfg["REF_VERSION"]]["fa"],
         dedup=file_cfg["dedup"](args),
@@ -55,3 +53,26 @@ def gatk_printread(args, param_dict=None):
         bqsr=file_cfg["bqsr"](args)
         )
     return cmd, file_cfg["bqsr"](args)
+
+
+@run_task("GATK HaplotypeCaller")
+def gatk_haplotypecaller(args, param_dict=None):
+    """
+    The HaplotypeCaller is capable of calling SNPs and indels simultaneously via local de-novo
+    assembly of haplotypes in an active region. In other words, whenever the program encounters
+    a region showing signs of variation, it discards the existing mapping information and completely
+    reassembles the reads in that region.
+    """
+    cmd = DOCKER_RUN + """gatk:{_v} -T HaplotypeCaller {param} -nct {_p} -R {_R}\
+    -I {bqsr} --emitRefConfidence GVCF --dbsnp {_dbsnp_vcf} -o {gvcf}"""
+    cmd = cmd.format(
+        _ref_v=version_cfg["REF_VERSION"],
+        _out_d=args.out_dir,
+        param=join_params(param_dict),
+        _p=args.p,
+        _v=_version,
+        _dbsnp_vcf=ref_file_cfg[version_cfg["REF_VERSION"]]["dbsnp"],
+        _R=ref_file_cfg[version_cfg["REF_VERSION"]]["fa"],
+        bqsr=file_cfg["bqsr"](args),
+        gvcf=file_cfg["gvcf"](args))
+    return cmd, file_cfg["gvcf"](args)

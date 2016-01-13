@@ -91,6 +91,7 @@ def main(args):
     #print pipe_picard.picard_dedup(args)
     print pipe_GATK.gatk_bqsr(args)
     print pipe_GATK.gatk_printread(args)
+    print pipe_GATK.gatk_haplotypecaller(args)
 
 if __name__ == '__main__':
     args = get_args()

@@ -25,7 +25,8 @@ file_cfg = {
     "aligned": lambda args: "tmp/{}.aln.sam".format(args.samplename),
     "sorted": lambda args: "tmp/{}.sort.bam".format(args.samplename),
     "dedup": lambda args: "tmp/{}.dedup.bam".format(args.samplename),
-    "matrics": lambda args: "tmp/{}.matrics.bam".format(args.samplename),
-    "table": lambda args: "tmp/{}.table.bam".format(args.samplename),
-    "bqsr": lambda args: "tmp/{}.bqsr.bam".format(args.samplename)
+    "matrics": lambda args: "tmp/{}.matrics".format(args.samplename),
+    "table": lambda args: "tmp/{}.table".format(args.samplename),
+    "bqsr": lambda args: "tmp/{}.bqsr.bam".format(args.samplename),
+    "gvcf": lambda args: "{}.raw.g.vcf".format(args.samplename),
 }
