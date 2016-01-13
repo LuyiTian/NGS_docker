@@ -72,7 +72,7 @@ def bwa_mem(args, param_dict=None):
         ["bwa mem -t {_p} -M".format(_p=args.p), join_params(param_dict), ref_file_cfg[_ref_version]["fa"], in_fq, _out_sam])
     cmd = \
         r"""{_D} -v {_data_d}:/data bwa:{_bwa_v} bash -c "{_bwa_c}" """.format(
-            _D=__DOCKER_RUN,
+            _D=DOCKER_RUN,
             _ref_v=version_cfg["REF_VERSION"],
             _bwa_v=_version,
             _out_d=args.out_dir,

@@ -14,7 +14,7 @@ ref_file_cfg = {
     }
 }
 
-__DOCKER_RUN = "docker run --rm --volumes-from {_ref_v} -v {_out_d}:/out_dir -w /out_dir"
+DOCKER_RUN = "docker run --rm --volumes-from {_ref_v} -v {_out_d}:/out_dir -w /out_dir"
 
 ## all values in file_cfg are relative paths
 file_cfg = {
