@@ -10,15 +10,15 @@ def picard_sort(args, param_dict=None):
     """
     doc
     """
-    cmd = \
-        """{_D} picard:{_v} \
+    cmd = DOCKER_RUN + \
+        """ picard:{_v} \
     SortSam {param} I={aligned} O={sort} TMP_DIR=/out_dir SORT_ORDER=coordinate""".format(
+        _ref_v=version_cfg["REF_VERSION"],
+        _out_d=args.out_dir,
         _v=_version,
-        _D=DOCKER_RUN,
         aligned=file_cfg["aligned"](args),
         sort=file_cfg["sorted"](args),
-        param=join_params(param_dict),
-        _out_d=args.out_dir)
+        param=join_params(param_dict))
 
     return cmd, os.path.join(args.out_dir, file_cfg["sorted"](args))
 
@@ -28,13 +28,13 @@ def picard_dedup(args, param_dict=None):
     """
     doc
     """
-    cmd = \
-        """{_D} picard:{_v} \
+    cmd = DOCKER_RUN + \
+        """ picard:{_v} \
     MarkDuplicates {param} I={sort} O={dedup} METRICS_FILE={matrics} CREATE_INDEX=true""".format(
         _v=_version,
-        _D=DOCKER_RUN,
-        sort=file_cfg["sorted"](args),
+        _ref_v=version_cfg["REF_VERSION"],
         _out_d=args.out_dir,
+        sort=file_cfg["sorted"](args),
         param=join_params(param_dict),
         dedup=file_cfg["dedup"](args),
         matrics=file_cfg["matrics"](args))
