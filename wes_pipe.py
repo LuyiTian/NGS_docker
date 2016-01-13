@@ -4,7 +4,7 @@ import argparse
 import os
 from pipeline import pipe_bwa, pipe_picard
 from pipeline import util
-from prog_cfg import bwa_mem_cfg
+from prog_cfg import bwa_mem_cfg, gatk_bqsr_cfg
 __PROG = "NGS_docker"
 __AUTHOR = "Luyi Tian"
 __VERSION = "0.1"
@@ -87,8 +87,10 @@ def main(args):
     if args.buildindex:
         print pipe_bwa.bwa_index(args)
     #print pipe_bwa.bwa_mem(args, bwa_mem_cfg)
-    print pipe_picard.picard_sort(args)
-    print pipe_picard.picard_dedup(args)
+    #print pipe_picard.picard_sort(args)
+    #print pipe_picard.picard_dedup(args)
+    print pipe_GATK.gatk_bqsr(args, gatk_bqsr_cfg)
+    print pipe_GATK.gatk_printread(args)
 
 if __name__ == '__main__':
     args = get_args()
