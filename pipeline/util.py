@@ -112,14 +112,14 @@ def run_task(task_name):
     """
     def actualDecorator(func):
         @functools.wraps(func)
-        def wrapper(args, **kwargs):
+        def wrapper(args, param_dict=None, **kwargs):
             ## start logging
             run_log = open(os.path.join(args.out_dir, file_cfg["run_log"](args)), 'a')
             ## load cache_dict
             cache_dict = pkl.load(open(os.path.join(args.out_dir, file_cfg["cache"](args)), 'rb'))
 
             start_time = datetime.datetime.now().strftime(__TIME_FORMAT)
-            cmd, out_f = func(args, **kwargs)
+            cmd, out_f = func(args, param_dict, **kwargs)
             print cmd
             ## check if output file already exist
             if args.usecache and out_f and _check_exists(args, cmd, cache_dict):
