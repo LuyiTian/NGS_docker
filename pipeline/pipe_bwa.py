@@ -2,15 +2,13 @@
 import os
 from param_cfg import *
 from util import run_task, join_params
+_version = version_cfg["BWA_VERSION"]
 
 
 @run_task("build bwa index")
-def bwa_index(args):
+def bwa_index(args, param_dict=None):
     """
     """
-    _ref_version = version_cfg["REF_VERSION"]
-    _bwa_version = version_cfg["BWA_VERSION"]
-    _in_fa = ref_file_cfg[_ref_version]["fa"]
     cmd1 = \
         """docker create \
     -v /ref \
@@ -22,16 +20,17 @@ def bwa_index(args):
     --volumes-from {_ref_v} \
     -w /ref \
     bwa:{_bwa_v} \
-    bwa index {in_f} """.format(
-        in_f=_in_fa,
-        _ref_v=_ref_version,
-        _bwa_v=_bwa_version)
+    bwa index {param} {in_f} """.format(
+        in_f=ref_file_cfg[_ref_version]["fa"],
+        param=join_params(param_dict),
+        _ref_v=version_cfg["REF_VERSION"],
+        _bwa_v=_version)
 
     return " && ".join([cmd1, cmd2]), None
 
 
 @run_task("bwa-mem alignment")
-def bwa_mem(args):
+def bwa_mem(args, param_dict=None):
     """
     """
     def parse_in(args):
@@ -68,24 +67,15 @@ def bwa_mem(args):
         return data_dir, " ".join(in_f)
 
     data_dir, in_fq = parse_in(args)
-    _ref_version = version_cfg["REF_VERSION"]
-    _bwa_version = version_cfg["BWA_VERSION"]
-    _in_fa = ref_file_cfg[_ref_version]["fa"]
     _out_sam = "> {}".format(file_cfg["aligned"](args))
-
     bwa_cmd = " ".join(
-        ["bwa mem -t {_p} -M".format(_p=args.p), join_params(bwa_mem_cfg), _in_fa, in_fq, _out_sam])
+        ["bwa mem -t {_p} -M".format(_p=args.p), join_params(param_dict), ref_file_cfg[_ref_version]["fa"], in_fq, _out_sam])
     cmd = \
-        r"""docker run \
-    --rm \
-    --volumes-from {_ref_v} \
-    -v {_out_d}:/out_dir \
-    -v {_data_d}:/data\
-    -w /out_dir \
-    bwa:{_bwa_v} bash -c "{_bwa_c}" """.format(
-        _ref_v=_ref_version,
-        _bwa_v=_bwa_version,
-        _out_d=args.out_dir,
-        _data_d=data_dir,
-        _bwa_c=bwa_cmd)
+        r"""{_D} -v {_data_d}:/data bwa:{_bwa_v} bash -c "{_bwa_c}" """.format(
+            _D=__DOCKER_RUN,
+            _ref_v=version_cfg["REF_VERSION"],
+            _bwa_v=_version,
+            _out_d=args.out_dir,
+            _data_d=data_dir,
+            _bwa_c=bwa_cmd)
     return cmd, file_cfg["aligned"](args)

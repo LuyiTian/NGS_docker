@@ -2,14 +2,19 @@
 
 version_cfg = {
     "REF_VERSION": "hg19",
-    "BWA_VERSION": "0.7.12"
+    "BWA_VERSION": "0.7.12",
+    "PICARD_VERSION": "2.0.1",
+    "GATK_VERSION": "3.5"
 }
 
 ref_file_cfg = {
     "hg19": {
-        "fa": "/ref/ucsc.hg19.fasta.gz"
+        "fa": "/ref/ucsc.hg19.fasta.gz",
+        "dbsnp": "/ref/dbsnp_138.hg19.vcf.gz"
     }
 }
+
+__DOCKER_RUN = "docker run --rm --volumes-from {_ref_v} -v {_out_d}:/out_dir -w /out_dir"
 
 ## all values in file_cfg are relative paths
 file_cfg = {
@@ -21,10 +26,6 @@ file_cfg = {
     "sorted": lambda args: "tmp/{}.sort.bam".format(args.samplename),
     "dedup": lambda args: "tmp/{}.dedup.bam".format(args.samplename),
     "matrics": lambda args: "tmp/{}.matrics.bam".format(args.samplename),
-}
-
-###################
-## stores program prarmeters, except in/out
-bwa_mem_cfg = {
-    "-R": r"'@RG\tID:group1\tSM:sample1\tLB:lib1\tPL:illumina\tPU:unit1'"
+    "table": lambda args: "tmp/{}.table.bam".format(args.samplename),
+    "bqsr": lambda args: "tmp/{}.bqsr.bam".format(args.samplename)
 }

@@ -1,0 +1,37 @@
+# Base image
+FROM ubuntu:14.04
+
+# Maintainer 
+MAINTAINER Luyi Tian tlytiger@hotmail.com
+
+# Update install packages required by GATK
+RUN apt-get update
+RUN apt-get install -y wget
+RUN apt-get install -y unzip
+
+ENV LANG en_US.UTF-8
+RUN locale-gen $LANG
+RUN apt-get install -y software-properties-common \
+    && add-apt-repository ppa:openjdk-r/ppa
+RUN apt-get update && apt-get install -y openjdk-8-jre
+ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
+RUN export JAVA_HOME
+
+
+# + picard
+ADD GenomeAnalysisTK-3.5.tar.bz2 /tmp/
+RUN wget -O /tmp/picard-tools-2.0.1.zip https://github.com/broadinstitute/picard/releases/download/2.0.1/picard-tools-2.0.1.zip \
+    && tar -xjf /tmp/GenomeAnalysisTK-3.5.tar.bz2 -C /tmp/ \
+    && cp -v /tmp/GenomeAnalysisTK-3.5/* /usr/local/bin \
+    && bash -c 'echo -e "#!/bin/bash\njava -Xmx4g -jar /usr/local/bin/GenomeAnalysisTK.jar \$@" > /usr/local/bin/gatk' \
+    && chmod +x /usr/local/bin/gatk
+  
+#Cleanup the temp dir
+RUN rm -rf /tmp/*
+
+# Use baseimage-docker's bash.
+ENTRYPOINT ["gatk"]
+
+#Clean up APT when done.
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN apt-get autoclean && apt-get autoremove -y && rm -rf /var/lib/{apt,dpkg,cache,log}/

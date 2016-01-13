@@ -4,6 +4,7 @@ import argparse
 import os
 from pipeline import pipe_bwa, pipe_picard
 from pipeline import util
+from prog_cfg import bwa_mem_cfg
 __PROG = "NGS_docker"
 __AUTHOR = "Luyi Tian"
 __VERSION = "0.1"
@@ -85,7 +86,7 @@ def main(args):
     util.init_datadir(args)
     if args.buildindex:
         print pipe_bwa.bwa_index(args)
-    #print pipe_bwa.bwa_mem(args)
+    #print pipe_bwa.bwa_mem(args, bwa_mem_cfg)
     print pipe_picard.picard_sort(args)
     print pipe_picard.picard_dedup(args)
 

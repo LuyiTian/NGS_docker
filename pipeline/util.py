@@ -32,6 +32,8 @@ def prep_dir(result_dir, sub_dir):
 
 
 def join_params(cfg_dict):
+    if not cfg_dict:
+        return ""
     res = []
     for key, val in cfg_dict.items():
         res.append(key)

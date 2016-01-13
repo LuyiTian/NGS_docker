@@ -4,10 +4,6 @@ FROM ubuntu:14.04
 # Maintainer 
 MAINTAINER Luyi Tian tlytiger@hotmail.com
 
-# Set correct environment variables.
-# ENV HOME /root
-# ENV DEBIAN_FRONTEND noninteractive
-
 # Update install packages required 
 # NOTE: running update and install separately is not the best practice
 #       just hope to reuse cache
@@ -21,6 +17,9 @@ RUN wget -O /tmp/sratoolkit.2.5.7-ubuntu64.tar.gz http://ftp-trace.ncbi.nlm.nih.
 
 ADD scripts/download_sra.sh /usr/local/bin/
 RUN chmod 777 /usr/local/bin/download_sra.sh
+
+#Cleanup the temp dir
+RUN rm -rf /tmp/*
 
 CMD ["/bin/bash"]
 

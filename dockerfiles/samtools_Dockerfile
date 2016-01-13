@@ -4,10 +4,6 @@ FROM ubuntu:14.04
 # Maintainer 
 MAINTAINER Luyi Tian tlytiger@hotmail.com
 
-# Set correct environment variables.
-# ENV HOME /root
-# ENV DEBIAN_FRONTEND noninteractive
-
 # Update install packages required by samtools
 RUN apt-get update -y
 RUN apt-get install -y wget
