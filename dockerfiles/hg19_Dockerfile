@@ -13,11 +13,17 @@ MAINTAINER Luyi Tian tlytiger@hotmail.com
 #       just hope to reuse cache
 RUN apt-get update -y
 RUN apt-get install -y wget
+RUN apt-get install -y libz-dev
 
 # + hg19 
+# The GATK cannot process compressed (.gz) reference sequences ！！！！！
 RUN mkdir ref \
     && cd ref \
-    && wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/2.8/hg19/*
+    && wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/2.8/hg19/* \
+    && gunzip ucsc.hg19.fasta.gz \
+    && gunzip ucsc.hg19.dict.gz \
+    && gunzip ucsc.hg19.fasta.fai.gz
+
   
 #Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
