@@ -37,7 +37,7 @@ GFW=1
 buildimage: ubuntubase bwaimage samtoolsimage picardimage hg19image gatkimage
 
 ubuntubase:
-ifneq ($(docker images -q ubuntu:14.04),"")
+ifeq ($(docker images -q ubuntu:14.04),"")
 ifeq ($(GFW),1) 
 	echo 'DOCKER_OPTS="--insecure-registry dl.dockerpool.com:5000"' >>  /etc/default/docker
 	docker pull dl.dockerpool.com:5000/ubuntu:14.04

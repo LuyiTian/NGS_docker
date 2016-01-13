@@ -45,26 +45,26 @@ def init_datadir(args):
     """
     doc
     """
-    out_dir = prep_dir(args.rootdir, args.samplename)
-    prep_dir(out_dir, "tmp")
-    prep_dir(out_dir, "log")
-    prep_dir(out_dir, "report")
-    if os.path.isfile(os.path.join(out_dir, file_cfg["run_log"](args))):
-        mode = "w"
+    prep_dir(args.rootdir, args.samplename)
+    prep_dir(args.out_dir, "tmp")
+    prep_dir(args.out_dir, "log")
+    prep_dir(args.out_dir, "report")
+    if os.path.isfile(os.path.join(args.out_dir, file_cfg["run_log"](args))):
+        mode = "a"
+    else:
         cache_dict = OrderedDict()
         cache_dict["_samplename"] = args.samplename
-        pkl.dump(cache_dict, open(os.path.join(out_dir, file_cfg["cache"](args)), 'wb'))
-    else:
-        mode = "a"
-    with open(os.path.join(out_dir, file_cfg["run_log"](args)), mode) as f:
+        pkl.dump(cache_dict, open(os.path.join(args.out_dir, file_cfg["cache"](args)), 'wb'))
+        mode = "w"
+    with open(os.path.join(args.out_dir, file_cfg["run_log"](args)), mode) as f:
         f.write("#Pipeline Started at: {}\n".format(datetime.datetime.now().strftime(__TIME_FORMAT)))
         f.write("#Args:\n")
         f.write("".join(["#  {}\n    {}\n".format(k, v) for k, v in vars(args).iteritems()]))
-    with open(os.path.join(out_dir, file_cfg["std_log"](args)), mode) as f:
+    with open(os.path.join(args.out_dir, file_cfg["std_log"](args)), mode) as f:
         f.write("#Pipeline Started at: {}\n".format(datetime.datetime.now().strftime(__TIME_FORMAT)))
         f.write("#Root dir: {}\n".format(args.rootdir))
         f.write("#Sample Name: {}\n".format(args.samplename))
-    with open(os.path.join(out_dir, file_cfg["err_log"](args)), mode) as f:
+    with open(os.path.join(args.out_dir, file_cfg["err_log"](args)), mode) as f:
         f.write("#Pipeline Started at: {}\n".format(datetime.datetime.now().strftime(__TIME_FORMAT)))
         f.write("#Root dir: {}\n".format(args.rootdir))
         f.write("#Sample Name: {}\n".format(args.samplename))
