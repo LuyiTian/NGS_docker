@@ -18,7 +18,7 @@ def gatk_bqsr(args, param_dict=None):
     """
     cmd = DOCKER_RUN + """ gatk:{_v} -T BaseRecalibrator {param} -nct {_p}\
     -R {_R} -I {dedup} -knownSites {_dbsnp_vcf} -o {table}"""
-    cmd.format(
+    cmd = cmd.format(
         _ref_v=version_cfg["REF_VERSION"],
         _out_d=args.out_dir,
         param=join_params(param_dict),
@@ -42,7 +42,7 @@ def gatk_printread(args, param_dict=None):
     """
     cmd = DOCKER_RUN + """ gatk:{_v} -T PrintReads {param} -nct {_p}\
     -R {_R} -I {dedup} -BQSR {table} -o {bqsr}"""
-    cmd.format(
+    cmd = cmd.format(
         _ref_v=version_cfg["REF_VERSION"],
         _out_d=args.out_dir,
         param=join_params(param_dict),
