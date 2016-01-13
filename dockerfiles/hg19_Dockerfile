@@ -20,6 +20,14 @@ RUN apt-get install -y libz-dev
 RUN mkdir ref \
     && cd ref \
     && wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/2.8/hg19/* \
+    && gunzip 1000G_omni2.5.hg19.sites.vcf.gz \
+    && gunzip 1000G_omni2.5.hg19.sites.vcf.idx.gz \
+    && gunzip 1000G_phase1.snps.high_confidence.hg19.sites.vcf.gz \
+    && gunzip 1000G_phase1.snps.high_confidence.hg19.sites.vcf.idx.gz \
+    && gunzip dbsnp_138.hg19.vcf.gz \
+    && gunzip dbsnp_138.hg19.vcf.idx.gz \
+    && gunzip hapmap_3.3.hg19.sites.vcf.gz \
+    && gunzip hapmap_3.3.hg19.sites.vcf.idx.gz \
     && gunzip ucsc.hg19.fasta.gz \
     && gunzip ucsc.hg19.dict.gz \
     && gunzip ucsc.hg19.fasta.fai.gz

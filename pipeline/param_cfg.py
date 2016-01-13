@@ -10,7 +10,7 @@ version_cfg = {
 ref_file_cfg = {
     "hg19": {
         "fa": "/ref/ucsc.hg19.fasta",
-        "dbsnp": "/ref/dbsnp_138.hg19.vcf.gz"
+        "dbsnp": "/ref/dbsnp_138.hg19.vcf"
     }
 }
 
