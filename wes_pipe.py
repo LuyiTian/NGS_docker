@@ -89,7 +89,7 @@ def main(args):
     #print pipe_bwa.bwa_mem(args, bwa_mem_cfg)
     #print pipe_picard.picard_sort(args)
     #print pipe_picard.picard_dedup(args)
-    print pipe_GATK.gatk_bqsr(args, gatk_bqsr_cfg)
+    print pipe_GATK.gatk_bqsr(args)
     print pipe_GATK.gatk_printread(args)
 
 if __name__ == '__main__':
