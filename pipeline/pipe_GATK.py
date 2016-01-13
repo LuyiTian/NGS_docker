@@ -16,8 +16,11 @@ def gatk_bqsr(args, param_dict=None):
     there is none available for your organism), then it adjusts the base quality scores
     in the data based on the model.
     """
-    cmd = """{_D} gatk:{_v} -T BaseRecalibrator {param} -nct {_p}\
-    -R {_R} -I {dedup} -knownSites {_dbsnp_vcf} -o {table}""".format(
+    cmd = DOCKER_RUN + """ gatk:{_v} -T BaseRecalibrator {param} -nct {_p}\
+    -R {_R} -I {dedup} -knownSites {_dbsnp_vcf} -o {table}"""
+    cmd.format(
+        _ref_v=version_cfg["REF_VERSION"],
+        _out_d=args.out_dir,
         param=join_params(param_dict),
         _p=args.p,
         _D=DOCKER_RUN,
@@ -37,8 +40,11 @@ def gatk_printread(args, param_dict=None):
     It can dynamically merge the contents of multiple input BAM files, resulting in merged output
     sorted in coordinate order.
     """
-    cmd = """{_D} gatk:{_v} -T PrintReads {param} -nct {_p}\
-    -R {_R} -I {dedup} -BQSR {table} -o {bqsr}""".format(
+    cmd = DOCKER_RUN + """ gatk:{_v} -T PrintReads {param} -nct {_p}\
+    -R {_R} -I {dedup} -BQSR {table} -o {bqsr}"""
+    cmd.format(
+        _ref_v=version_cfg["REF_VERSION"],
+        _out_d=args.out_dir,
         param=join_params(param_dict),
         _p=args.p,
         _D=DOCKER_RUN,

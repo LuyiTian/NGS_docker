@@ -12,7 +12,8 @@ def picard_sort(args, param_dict=None):
     """
     cmd = DOCKER_RUN + \
         """ picard:{_v} \
-    SortSam {param} I={aligned} O={sort} TMP_DIR=/out_dir SORT_ORDER=coordinate""".format(
+    SortSam {param} I={aligned} O={sort} TMP_DIR=/out_dir SORT_ORDER=coordinate"""
+    cmd.format(
         _ref_v=version_cfg["REF_VERSION"],
         _out_d=args.out_dir,
         _v=_version,
@@ -30,7 +31,8 @@ def picard_dedup(args, param_dict=None):
     """
     cmd = DOCKER_RUN + \
         """ picard:{_v} \
-    MarkDuplicates {param} I={sort} O={dedup} METRICS_FILE={matrics} CREATE_INDEX=true""".format(
+    MarkDuplicates {param} I={sort} O={dedup} METRICS_FILE={matrics} CREATE_INDEX=true"""
+    cmd.format(
         _v=_version,
         _ref_v=version_cfg["REF_VERSION"],
         _out_d=args.out_dir,
