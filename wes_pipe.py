@@ -2,7 +2,7 @@
 #
 import argparse
 import os
-from pipeline import pipe_bwa, pipe_picard
+from pipeline import pipe_bwa, pipe_picard, pipe_GATK
 from pipeline import util
 from prog_cfg import bwa_mem_cfg, gatk_bqsr_cfg
 __PROG = "NGS_docker"
