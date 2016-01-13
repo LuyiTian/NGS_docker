@@ -5,6 +5,7 @@ from util import run_task, join_params
 _version = version_cfg["GATK_VERSION"]
 
 
+@run_task("GATK BQSR")
 def gatk_bqsr(args, param_dict=None):
     """
     Base quality score recalibration (BQSR) is a process in which we apply machine learning
@@ -29,6 +30,7 @@ def gatk_bqsr(args, param_dict=None):
     return cmd, file_cfg["table"](args)
 
 
+@run_task("GATK printread")
 def gatk_printread(args, param_dict=None):
     """
     PrintReads is a generic utility tool for manipulating sequencing data in SAM/BAM format.
