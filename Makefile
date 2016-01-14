@@ -34,7 +34,7 @@ GFW=1
 
 ################################################################
 # build images...
-buildimage: ubuntubase bwaimage samtoolsimage picardimage hg19image gatkimage
+buildimage: ubuntubase bwaimage samtoolsimage picardimage hg19image gatkimage sraimage
 
 ubuntubase:
 ifeq ($(docker images -q ubuntu:14.04),"")
