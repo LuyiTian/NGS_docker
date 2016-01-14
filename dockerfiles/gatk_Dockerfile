@@ -23,7 +23,7 @@ RUN export JAVA_HOME
 # (identity, gzip, bzip2 or xz) then it is unpacked as a directory. Resources from remote URLs are not decompressed.
 ADD GenomeAnalysisTK-3.5.tar.bz2 /tmp
 RUN cp -R -v /tmp/* /usr/local/bin \
-    && bash -c 'echo -e "#!/bin/bash\njava -Xmx2g -jar /usr/local/bin/GenomeAnalysisTK.jar \$@" > /usr/local/bin/gatk' \
+    && bash -c 'echo -e "#!/bin/bash\njava -Xmx2G -jar /usr/local/bin/GenomeAnalysisTK.jar \$@" > /usr/local/bin/gatk' \
     && chmod +x /usr/local/bin/gatk
   
 #Cleanup the temp dir
