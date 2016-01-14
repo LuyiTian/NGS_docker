@@ -18,7 +18,7 @@ ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
 RUN export JAVA_HOME
 
 
-# + picard
+# + gatk
 # If <src> is a local tar archive in a recognized compression format 
 # (identity, gzip, bzip2 or xz) then it is unpacked as a directory. Resources from remote URLs are not decompressed.
 ADD GenomeAnalysisTK-3.5.tar.bz2 /tmp
