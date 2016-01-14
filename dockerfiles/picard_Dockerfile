@@ -26,7 +26,7 @@ RUN export JAVA_HOME
 RUN wget --no-check-certificate -O /tmp/picard-tools-2.0.1.zip https://github.com/broadinstitute/picard/releases/download/2.0.1/picard-tools-2.0.1.zip \
     && unzip /tmp/picard-tools-2.0.1.zip -d /tmp/ \
     && cp -v /tmp/picard-tools-2.0.1/* /usr/local/bin \
-    && bash -c 'echo -e "#!/bin/bash\njava -Xmx4g -jar /usr/local/bin/picard.jar \$@" > /usr/local/bin/picard' \
+    && bash -c 'echo -e "#!/bin/bash\njava -Xmx3g -jar /usr/local/bin/picard.jar \$@" > /usr/local/bin/picard' \
     && chmod +x /usr/local/bin/picard
   
 #Cleanup the temp dir
