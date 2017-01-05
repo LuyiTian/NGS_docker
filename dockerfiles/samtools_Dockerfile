@@ -4,8 +4,9 @@ FROM ubuntu:14.04
 # Maintainer 
 MAINTAINER Luyi Tian tlytiger@hotmail.com
 
-# update source
+# update source and change timezome
 COPY sources.list /etc/apt/sources.list
+RUN echo "Asia/Shanghai" > /etc/timezone;
 
 # Update install packages required by samtools
 RUN apt-get update -y
@@ -18,12 +19,12 @@ libncurses5-dev \
 libncursesw5-dev
 
 # + samtools 
-RUN wget -O /tmp/samtools-1.3.tar.bz2 http://iweb.dl.sourceforge.net/project/samtools/samtools/1.3/samtools-1.3.tar.bz2 \
-    && tar xjvf /tmp/samtools-1.3.tar.bz2 -C /tmp/ \
-    && cd /tmp/samtools-1.3 \
+RUN wget -O /tmp/samtools-1.3.1.tar.bz2 https://github.com/samtools/samtools/releases/download/1.3.1/samtools-1.3.1.tar.bz2 \
+    && tar xjvf /tmp/samtools-1.3.1.tar.bz2 -C /tmp/ \
+    && cd /tmp/samtools-1.3.1 \
     && make \
     && make prefix=/usr/local install
-RUN echo "Asia/Shanghai" > /etc/timezone;
+
 #Cleanup the temp dir
 RUN rm -rf /tmp/*
 
