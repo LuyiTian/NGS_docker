@@ -4,6 +4,9 @@ FROM ubuntu:14.04
 # Maintainer 
 MAINTAINER Luyi Tian tlytiger@hotmail.com
 
+# update source
+COPY sources.list /etc/apt/sources.list
+
 # Update install packages required by samtools
 RUN apt-get update -y
 RUN apt-get install -y wget
@@ -20,7 +23,7 @@ RUN wget -O /tmp/samtools-1.3.tar.bz2 http://iweb.dl.sourceforge.net/project/sam
     && cd /tmp/samtools-1.3 \
     && make \
     && make prefix=/usr/local install
-  
+RUN echo "Asia/Shanghai" > /etc/timezone;
 #Cleanup the temp dir
 RUN rm -rf /tmp/*
 
