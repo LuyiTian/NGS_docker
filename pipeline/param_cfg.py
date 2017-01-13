@@ -1,16 +1,23 @@
 ## param_cfg.py
 
 version_cfg = {
-    "REF_VERSION": "hg19",
+    "REF_VERSION": "GRCh37",
     "BWA_VERSION": "0.7.12",
     "PICARD_VERSION": "2.0.1",
-    "GATK_VERSION": "3.5"
+    "GATK_VERSION": "3.5",
+    "ISSAC3_VERSION": "03.16.12.05",
+    "MANTA_VERSION": "1.0.3",
+    "STRELKA_VERSION": "2.7.1"
 }
 
 ref_file_cfg = {
     "hg19": {
         "fa": "/ref/ucsc.hg19.fasta",
         "dbsnp": "/ref/dbsnp_138.hg19.vcf"
+    },
+    "GRCh37": {
+        "fa": "/ref/human_g1k_v37.fasta",
+        "dbsnp": "/ref/dbsnp_138.b37.vcf"
     }
 }
 

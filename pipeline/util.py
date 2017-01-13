@@ -35,10 +35,13 @@ def join_params(cfg_dict):
     if not cfg_dict:
         return ""
     res = []
-    for key, val in cfg_dict.items():
-        res.append(key)
-        res.append(val)
-    return " ".join(res)
+    if isinstance(cfg_dict, dict):
+        for key, val in cfg_dict.items():
+            res.append(key)
+            res.append(val)
+        return " ".join(res)
+    else:
+        return cfg_dict
 
 
 def init_datadir(args):
