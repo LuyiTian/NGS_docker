@@ -4,6 +4,10 @@ FROM ubuntu:14.04
 # Maintainer 
 MAINTAINER Luyi Tian tlytiger@hotmail.com
 
+# update source and change timezome
+COPY sources.list /etc/apt/sources.list
+RUN echo "Asia/Shanghai" > /etc/timezone;
+
 # Update install packages required 
 # NOTE: running update and install separately is not the best practice
 #       just hope to reuse cache
@@ -11,12 +15,10 @@ RUN apt-get update -y
 RUN apt-get install -y wget
 
 # + sra-toolkit 
-RUN wget -O /tmp/sratoolkit.2.5.7-ubuntu64.tar.gz http://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/2.5.7/sratoolkit.2.5.7-ubuntu64.tar.gz \
-    && tar vxzf /tmp/sratoolkit.2.5.7-ubuntu64.tar.gz -C /tmp/ \
-    && cp -R -v /tmp/sratoolkit.2.5.7-ubuntu64/bin/* /usr/local/bin
+RUN wget -O /tmp/sratoolkit.2.8.2-1-ubuntu64.tar.gz http://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/2.8.2-1/sratoolkit.2.8.2-1-ubuntu64.tar.gz \
+    && tar vxzf /tmp/sratoolkit.2.8.2-1-ubuntu64.tar.gz -C /tmp/ \
+    && cp -R -v /tmp/sratoolkit.2.8.2-1-ubuntu64/bin/* /usr/local/bin
 
-ADD scripts/download_sra.sh /usr/local/bin/
-RUN chmod 777 /usr/local/bin/download_sra.sh
 
 #Cleanup the temp dir
 RUN rm -rf /tmp/*
